@@ -27,6 +27,7 @@ class player {
       this.hspd = 0;
       this.vspd = 0;
       this.spd = 1;
+      this.box = new THREE.Box3().setFromObject(this.body);
     }
   }
   update() {
@@ -49,6 +50,12 @@ class player {
     //-- Debug Code --
     {
       //console.log(this.body.position.z);
+      //console.log(this.box.min);
+    }
+
+    //-- Update Bounding Box --
+    {
+      this.box.setFromObject(this.body);
     }
 
   }
