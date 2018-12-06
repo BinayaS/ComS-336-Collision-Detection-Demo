@@ -38,14 +38,14 @@ class player {
       this.box = new THREE.Box3().setFromObject(this.body);
     }
   }
-  update() {
+  update(objectTree) {
     //-- Movement --
     {
       //-- onGround Movement --
       {
         this.horizontalZ = this.moveForward - this.moveBackward;
         this.horizontalX = this.moveLeft - this.moveRight;
-
+        // console.log(this.horizontalZ);
         if(this.horizontalX != 0 && this.horizontalZ != 0) {
           this.currentMoveSpd = this.spd/Math.sqrt(2);
         } else {
@@ -92,11 +92,15 @@ class player {
       }
 
       //-- Apply Vertical Movement --
-      this.body.translateX(this.hspdX);
-      this.body.translateZ(this.hspdZ);
-      this.body.translateY(this.vspd);
+      if(!isCollision(objectTree,this.box,this.hspdX,this.hspdZ)){
+        console.log(!isCollision(objectTree,this.box,this.hspdX,this.hspdZ))
+        this.body.translateX(this.hspdX);
+        this.body.translateZ(this.hspdZ);
+        this.body.translateY(this.vspd);
+      }
+
     }
-    
+
     //-- Debug Code --
     {
       //console.log(this.body.position.z);

@@ -57,9 +57,11 @@
 
     //-- Call updates --
     {
-      objPlayer.update();
+      // console.log(isCollision(objectTree,objPlayer));
+      objPlayer.update(objectTree);
       objCamera.cameraFollow();
-      isCollision(objectTree,objPlayer);
+
+
     }
 
   	renderer.render(scene, objCamera.camera);

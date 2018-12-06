@@ -1,8 +1,7 @@
-function isCollision(tree, player){
+function isCollision(tree, player,hspdX,hspdZ){
   var currentNode=tree.root;
-  if(collistionDirection(currentNode,player.box)){
-    console.log("Collision Detected");
-  }
+
+  return collisionDirection(currentNode,player,hspdX,hspdZ);
 }
 
 function instersect(obj,playerCoords){
@@ -14,7 +13,6 @@ function instersect(obj,playerCoords){
   var aMinZ=objCoords.min.z;
   var aMaxZ=objCoords.max.z;
 
-  // var playerCoords=player.box;
 
   var bMinX=playerCoords.min.x;
   var bMaxX=playerCoords.max.x;
@@ -23,28 +21,20 @@ function instersect(obj,playerCoords){
   var bMinZ=playerCoords.min.z;
   var bMaxZ=playerCoords.max.z;
 
-  // console.log(objCoords);
   return (aMinX <= bMaxX && aMaxX >= bMinX) &&
            (aMinY <= bMaxY && aMaxY >= bMinY) &&
            (aMinZ <= bMaxZ && aMaxZ >= bMinZ);
 }
 
-function collistionDirection(obj,playerCoords){
-  if(player.moveBackward){
-    playerCoords.max.z+=player.spd;
-    playerCoords.min.z+=player.spd;
+function collisionDirection(obj,player,hspdX,hspdZ){
+  var playerCoords=player;
+
+  playerCoords.max.x+=hspdX;
+  playerCoords.min.x+=hspdX;
+  playerCoords.max.z+=hspdZ;
+  playerCoords.min.z+=hspdZ;
+  if(instersect(obj,playerCoords)){
+    return true;
   }
-  else if(player.moveForward){
-    playerCoords.max.z-=player.spd;
-    playerCoords.min.z-=player.spd;
-  }
-  if(player.moveRight){
-    playerCoords.max.x+=player.spd;
-    playerCoords.min.x+=player.spd;
-  }
-  else if(player.moveLeft){
-    playerCoords.max.x-=player.spd;
-    playerCoords.min.x-=player.spd;
-  }
-  return instersect(obj,playerCoords);
+  else return false;
 }
