@@ -17,24 +17,14 @@ class player {
       this.moveBackward = false;
       this.moveLeft = false;
       this.moveRight = false;
-      this.jump = false;
-      this.onGround = true;
     }
 
     //-- Setup Local Vars. --
     {
-      this.hspdX = 0;
-      this.hspdZ = 0;
+      this.hspd = 0;
       this.vspd = 0;
       this.spd = 1;
-      this.jumpPower = 1;
-      this.grav = 0.5;
       this.currentMoveSpd = this.spd;
-
-      this.horizontalX = 0;
-      this.horizontalZ = 0;
-      this.vertical = 0;
-
       this.box = new THREE.Box3().setFromObject(this.body);
     }
   }
@@ -71,24 +61,17 @@ class player {
         }
 
       }
-
-      //-- Vertical Movement --
-      // {
-      //   if(this.jump && this.onGround) {
-      //     this.jump = false;
-      //     this.onGround = false;
-      //     this.vspd += this.jumpPower;
-      //   }
-      // }
-
-      //-- Gravity's Pull --
-      {
-        if(this.body.position.y > 0) {
-          this.vspd += this.grav;
-        } else {
-          this.body.position.y = 0;
-          this.onGround = true;
-        }
+      if(this.moveForward && !this.moveBackward) {
+        this.body.translateZ(this.spd);
+      }
+      if(this.moveBackward && !this.moveForward) {
+        this.body.translateZ(-this.spd);
+      }
+      if(this.moveLeft && !this.moveRight) {
+        this.body.translateX(this.spd);
+      }
+      if(this.moveRight && !this.moveLeft) {
+        this.body.translateX(-this.spd);
       }
 
       //-- Apply Vertical Movement --
