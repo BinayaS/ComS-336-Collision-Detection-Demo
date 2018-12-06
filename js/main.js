@@ -34,8 +34,8 @@
   var objCube = new THREE.Object3D();
   var objCube2 = new THREE.Object3D();
 
-  var cubeNode = new node("cube", objCube);
-  var cube2Node = new node("cube2", objCube2);
+  var cubeNode = new node("cube", cube);
+  var cube2Node = new node("cube2", cube2);
   objectTree.setRoot(cubeNode);
   cubeNode.setChildL(cube2Node);
 
@@ -60,6 +60,7 @@
     {
       objPlayer.update();
       objCamera.cameraFollow();
+      isCollision(objectTree,objPlayer);
     }
 
   	renderer.render(scene, objCamera.camera);
