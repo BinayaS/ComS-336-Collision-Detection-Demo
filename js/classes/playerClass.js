@@ -8,9 +8,6 @@ class player {
       this.body = new THREE.Object3D();
       this.body.add(this.cube);
       scene.add(this.body);
-      // this.body.rotateX(0.4);
-      // this.body.rotateY(0.2);
-      // this.body.rotateZ(0);
       this.body.translateZ(10);
     }
 
@@ -27,12 +24,18 @@ class player {
       this.hspd = 0;
       this.vspd = 0;
       this.spd = 1;
+      this.currentMoveSpd = this.spd;
       this.box = new THREE.Box3().setFromObject(this.body);
     }
   }
   update() {
     //-- Movement --
     {
+      if(this.moveForward && this.moveBackward) {
+        this.currentMoveSpd = this.spd/Math.sqrt(2);
+      } else {
+        this.currentMoveSpd = this.spd;
+      }
       if(this.moveForward && !this.moveBackward) {
         this.body.translateZ(this.spd);
       }
