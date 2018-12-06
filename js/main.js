@@ -33,14 +33,14 @@
   cube2.translateX(30);
   var objCube = new THREE.Object3D();
   var objCube2 = new THREE.Object3D();
-
+  objCube.add(cube);
+  objCube2.add(cube2);
   var cubeNode = new node("cube", objCube);
   var cube2Node = new node("cube2", objCube2);
   objectTree.setRoot(cubeNode);
   cubeNode.setChildL(cube2Node);
 
-  objCube.add(cube);
-  objCube2.add(cube2);
+
   scene.add(objCube);
   scene.add(objCube2);
 }
@@ -60,6 +60,7 @@
     {
       objPlayer.update();
       objCamera.cameraFollow();
+      isCollision(objectTree,objPlayer);
     }
 
   	renderer.render(scene, objCamera.camera);
