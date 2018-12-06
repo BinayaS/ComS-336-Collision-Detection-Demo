@@ -40,7 +40,6 @@
   objectTree.setRoot(cubeNode);
   cubeNode.setChildL(cube2Node);
 
-
   scene.add(objCube);
   scene.add(objCube2);
 }

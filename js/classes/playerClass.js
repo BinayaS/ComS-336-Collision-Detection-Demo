@@ -46,7 +46,7 @@ class player {
         this.body.translateX(-this.spd);
       }
     }
-
+    
     //-- Debug Code --
     {
       //console.log(this.body.position.z);
