@@ -5,6 +5,7 @@
   var renderer;
   var scene;
   var objCamera;
+  var objectTree = new tree();
 }
 
 //-- Init the ThreeJs Scene --
@@ -30,10 +31,18 @@
   var cube2 = new THREE.Mesh(this.boxGeometry, basicMaterial);
   cube2.translateZ(20);
   cube2.translateX(30);
-  var body = new THREE.Object3D();
-  body.add(cube);
-  body.add(cube2);
-  scene.add(body);
+  var objCube = new THREE.Object3D();
+  var objCube2 = new THREE.Object3D();
+
+  var cubeNode = new node("cube", objCube);
+  var cube2Node = new node("cube2", objCube2);
+  objectTree.setRoot(cubeNode);
+  cubeNode.setChildL(cube2Node);
+
+  objCube.add(cube);
+  objCube2.add(cube2);
+  scene.add(objCube);
+  scene.add(objCube2);
 }
 
 //-- Vars --

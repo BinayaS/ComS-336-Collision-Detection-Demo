@@ -53,7 +53,7 @@ class player {
       //console.log(this.box.min);
     }
 
-    //-- Update Bounding Box --
+    //-- Update Min, Max, Cords. --
     {
       this.box.setFromObject(this.body);
     }
