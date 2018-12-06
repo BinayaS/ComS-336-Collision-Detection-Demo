@@ -26,3 +26,12 @@ class tree {
     node.parent = this;
   }
 }
+
+class octree {
+  constructor(name) {
+    this.name = name;
+    this.childTrees = [8];
+    this.nodes = [];
+
+  }
+}

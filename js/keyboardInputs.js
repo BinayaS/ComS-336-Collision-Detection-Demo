@@ -17,15 +17,20 @@ document.addEventListener('keydown', function(event) {
         //alert('s was pressed');
         objPlayer.moveBackward = true;
     }
+    if(event.keyCode == 32) {
+        //SpaceBar
+        objPlayer.jump = true;
+        console.log("jump");
+    }
   }
 
   //-- Camera Input --
   {
     if(event.keyCode == 81) {
-      //Q
+        //Q
     }
     if(event.keyCode == 69) {
-      //E
+        //E
     }
   }
 
