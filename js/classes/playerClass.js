@@ -17,37 +17,84 @@ class player {
       this.moveBackward = false;
       this.moveLeft = false;
       this.moveRight = false;
+      this.jump = false;
+      this.onGround = true;
     }
 
     //-- Setup Local Vars. --
     {
-      this.hspd = 0;
+      this.hspdX = 0;
+      this.hspdZ = 0;
       this.vspd = 0;
       this.spd = 1;
+      this.jumpPower = 1;
+      this.grav = 0.5;
       this.currentMoveSpd = this.spd;
+
+      this.horizontalX = 0;
+      this.horizontalZ = 0;
+      this.vertical = 0;
+
       this.box = new THREE.Box3().setFromObject(this.body);
     }
   }
   update() {
     //-- Movement --
     {
-      if(this.moveForward && this.moveBackward) {
-        this.currentMoveSpd = this.spd/Math.sqrt(2);
-      } else {
-        this.currentMoveSpd = this.spd;
+      //-- onGround Movement --
+      {
+        this.horizontalZ = this.moveForward - this.moveBackward;
+        this.horizontalX = this.moveLeft - this.moveRight;
+
+        if(this.horizontalX != 0 && this.horizontalZ != 0) {
+          this.currentMoveSpd = this.spd/Math.sqrt(2);
+        } else {
+          this.currentMoveSpd = this.spd;
+        }
+
+        //-- horizontalX --
+        if(this.horizontalX == 0) {
+        	this.hspdX = 0;
+        } else if(this.horizontalX > 0) {
+        	this.hspdX = this.currentMoveSpd;
+        } else {
+        	this.hspdX = -this.currentMoveSpd;
+        }
+
+        //-- horizontalZ --
+        if(this.horizontalZ == 0) {
+        	this.hspdZ = 0;
+        } else if(this.horizontalZ > 0) {
+        	this.hspdZ = this.currentMoveSpd;
+        } else {
+        	this.hspdZ = -this.currentMoveSpd;
+        }
+
       }
-      if(this.moveForward && !this.moveBackward) {
-        this.body.translateZ(this.spd);
+
+      //-- Vertical Movement --
+      // {
+      //   if(this.jump && this.onGround) {
+      //     this.jump = false;
+      //     this.onGround = false;
+      //     this.vspd += this.jumpPower;
+      //   }
+      // }
+
+      //-- Gravity's Pull --
+      {
+        if(this.body.position.y > 0) {
+          this.vspd += this.grav;
+        } else {
+          this.body.position.y = 0;
+          this.onGround = true;
+        }
       }
-      if(this.moveBackward && !this.moveForward) {
-        this.body.translateZ(-this.spd);
-      }
-      if(this.moveLeft && !this.moveRight) {
-        this.body.translateX(this.spd);
-      }
-      if(this.moveRight && !this.moveLeft) {
-        this.body.translateX(-this.spd);
-      }
+
+      //-- Apply Vertical Movement --
+      this.body.translateX(this.hspdX);
+      this.body.translateZ(this.hspdZ);
+      this.body.translateY(this.vspd);
     }
 
     //-- Debug Code --
