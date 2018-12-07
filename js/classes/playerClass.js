@@ -31,6 +31,12 @@ class player {
     }
   }
   update(objectTree) {
+
+    //-- Update Min, Max, Cords. --
+    {
+      this.box.setFromObject(this.body);
+    }
+
     //-- Movement --
     {
       //-- onGround Movement --
@@ -63,15 +69,27 @@ class player {
         }
 
       }
-      
+
 
       //-- Apply Vertical Movement --
-      if(!isCollision(objectTree,this.box,this.hspdX,this.hspdZ,this.vspd)){
-        console.log(!isCollision(objectTree,this.box,this.hspdX,this.hspdZ,this.vspd))
+      if(!placeMeeting( this.box.min.x + this.hspdX, this.box.max.x + this.hspdX,
+                        this.box.min.z, this.box.max.z,
+                        this.box.min.y, this.box.max.y, objectTree.root)) {
         this.body.translateX(this.hspdX);
+      }
+
+      if(!placeMeeting( this.box.min.x, this.box.max.x,
+                        this.box.min.z + this.hspdZ, this.box.max.z + this.hspdZ,
+                        this.box.min.y, this.box.max.y, objectTree.root)) {
         this.body.translateZ(this.hspdZ);
+      }
+
+      if(!placeMeeting( this.box.min.x, this.box.max.x,
+                        this.box.min.z, this.box.max.z,
+                        this.box.min.y + this.vspd, this.box.max.y + this.vspd, objectTree.root)) {
         this.body.translateY(this.vspd);
       }
+
 
     }
 
@@ -79,11 +97,6 @@ class player {
     {
       //console.log(this.body.position.z);
       //console.log(this.box.min);
-    }
-
-    //-- Update Min, Max, Cords. --
-    {
-      this.box.setFromObject(this.body);
     }
 
   }
