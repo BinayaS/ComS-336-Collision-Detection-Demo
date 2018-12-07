@@ -32,6 +32,5 @@ class octree {
     this.name = name;
     this.childTrees = [8];
     this.nodes = [];
-
   }
 }

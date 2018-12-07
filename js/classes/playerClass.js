@@ -8,7 +8,8 @@ class player {
       this.body = new THREE.Object3D();
       this.body.add(this.cube);
       scene.add(this.body);
-      this.body.translateZ(10);
+      //this.body.translateZ(10);
+      //this.body.translateY(20);
     }
 
     //-- Setup Keyboard Vars. --
@@ -26,11 +27,17 @@ class player {
       this.hspdZ = 0;
       this.vspd = 0;
       this.spd = 1;
+      this.collisionX = false;
+      this.collisionZ = false;
+      this.collisionY = false;
+      this.collisionXObject = null;
+      this.collisionZObject = null;
+      this.collisionYObject = null;
       this.currentMoveSpd = this.spd;
       this.box = new THREE.Box3().setFromObject(this.body);
     }
   }
-  update(objectTree) {
+  update(objectList,delta) {
 
     //-- Update Min, Max, Cords. --
     {
@@ -70,25 +77,78 @@ class player {
 
       }
 
-
       //-- Apply Vertical Movement --
-      if(!placeMeeting( this.box.min.x + this.hspdX, this.box.max.x + this.hspdX,
-                        this.box.min.z, this.box.max.z,
-                        this.box.min.y, this.box.max.y, objectTree.root)) {
-        this.body.translateX(this.hspdX);
+
+      if(objectList.length > 0) {
+        for(var i = 0; i < objectList.length; i++) {
+          if(placeMeeting( this.box.min.x + this.hspdX, this.box.max.x + this.hspdX,
+                            this.box.min.z, this.box.max.z,
+                            this.box.min.y, this.box.max.y, objectList[i])) {
+                            this.collisionX = true;
+                            this.collisionXObject = objectList[i];
+          }
+
+          if(placeMeeting( this.box.min.x, this.box.max.x,
+                            this.box.min.z + this.hspdZ, this.box.max.z + this.hspdZ,
+                            this.box.min.y, this.box.max.y, objectList[i])) {
+                            this.collisionZ = true;
+                            this.collisionZObject = objectList[i];
+          }
+
+          if(placeMeeting( this.box.min.x, this.box.max.x,
+                            this.box.min.z, this.box.max.z,
+                            this.box.min.y + this.vspd, this.box.max.y + this.vspd, objectList[i])) {
+                            this.collisionY = true;
+                            this.collisionYObject = objectList[i];
+          }
+          if(this.collisionX || this.collisionY || this.collisionZ) {
+            break;
+          }
+        }
+      } else {
+        this.body.translateX(this.hspdX * 60 * delta);
+        this.body.translateZ(this.hspdZ * 60 * delta);
+        this.body.translateY(this.vspd * 60 * delta);
       }
 
-      if(!placeMeeting( this.box.min.x, this.box.max.x,
+      if(!this.collisionX) {
+        this.body.translateX(this.hspdX * 60 * delta);
+      }
+      if(!this.collisionY) {
+        this.body.translateY(this.vspd * 60 * delta);
+      }
+      if(!this.collisionZ) {
+        this.body.translateZ(this.hspdZ * 60 * delta);
+      }
+
+      if(this.collisionXObject != null) {
+        if(!placeMeeting(this.box.min.x + this.hspdX, this.box.max.x + this.hspdX,
+                        this.box.min.z, this.box.max.z,
+                        this.box.min.y, this.box.max.y, this.collisionXObject)) {
+                        this.collisionX = false;
+                        this.collisionXObject = null;
+        }
+      }
+
+      if(this.collisionZObject != null) {
+        if(placeMeeting( this.box.min.x, this.box.max.x,
                         this.box.min.z + this.hspdZ, this.box.max.z + this.hspdZ,
-                        this.box.min.y, this.box.max.y, objectTree.root)) {
-        this.body.translateZ(this.hspdZ);
+                        this.box.min.y, this.box.max.y, this.collisionZObject)) {
+                        this.collisionZ = false;
+                        this.collisionZObject = null;
+        }
       }
 
-      if(!placeMeeting( this.box.min.x, this.box.max.x,
+      if(this.collisionYObject != null) {
+        if(placeMeeting( this.box.min.x, this.box.max.x,
                         this.box.min.z, this.box.max.z,
-                        this.box.min.y + this.vspd, this.box.max.y + this.vspd, objectTree.root)) {
-        this.body.translateY(this.vspd);
+                        this.box.min.y + this.vspd, this.box.max.y + this.vspd, this.collisionYObject)) {
+                        this.collisionY = false;
+                        this.collisionYObject = null;
+        }
       }
+
+
 
 
     }

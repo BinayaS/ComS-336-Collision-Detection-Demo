@@ -6,6 +6,8 @@
   var scene;
   var objCamera;
   var objectTree = new tree();
+  var objectList = [];
+  var prevTime = performance.now();
 }
 
 //-- Init the ThreeJs Scene --
@@ -25,23 +27,21 @@
 
 //-- Temp. Objects --
 {
-  var boxGeometry = new THREE.BoxGeometry(20, 10, 10);
-  var basicMaterial = new THREE.MeshBasicMaterial({color: 0x009111});
-  var cube = new THREE.Mesh(this.boxGeometry, basicMaterial);
-  var cube2 = new THREE.Mesh(this.boxGeometry, basicMaterial);
-  cube2.translateZ(20);
-  cube2.translateX(30);
-  var objCube = new THREE.Object3D();
-  var objCube2 = new THREE.Object3D();
-  objCube.add(cube);
-  objCube2.add(cube2);
-  var cubeNode = new node("cube", objCube);
-  var cube2Node = new node("cube2", objCube2);
-  objectTree.setRoot(cubeNode);
-  cubeNode.setChildL(cube2Node);
+  var geo = new THREE.PlaneBufferGeometry(100, 100);
+  var mat = new THREE.MeshBasicMaterial({ color: 0xD9C323, side: THREE.DoubleSide });
+  var plane = new THREE.Mesh(geo, mat);
 
-  scene.add(objCube);
-  scene.add(objCube2);
+  plane.rotateX(90 * Math.PI / 180);
+  plane.position.setY(-5);
+
+  scene.add(plane);
+
+  var cube1 = new solid(10, 20, 5, 20, 0, 20, -1, 0xFA7268, scene);
+  var cube2 = new solid(30, 10, 10, -20, 0, -20, -1, 0xFA7268, scene);
+  objectList.push(cube1);
+  objectList.push(cube2);
+  //objectList.push(planeNode);
+
 }
 
 //-- Vars --
@@ -55,15 +55,18 @@
   function render() {
   	requestAnimationFrame(render);
 
+    var time = performance.now();
+		var delta = ( time - prevTime ) / 1000;
+
     //-- Call updates --
     {
       // console.log(isCollision(objectTree,objPlayer));
-      objPlayer.update(objectTree);
+      objPlayer.update(objectList, delta);
       objCamera.cameraFollow();
 
 
     }
-
+    prevTime = time;
   	renderer.render(scene, objCamera.camera);
   }
 
