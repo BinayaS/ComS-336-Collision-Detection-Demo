@@ -138,6 +138,7 @@ class player {
                   }
                 }
               }
+            }
             } else {
               this.body.translateX(this.hspdX * 60 * delta);
               this.body.translateZ(this.hspdZ * 60 * delta);
@@ -210,7 +211,7 @@ class player {
           }
         }
       }
-    }
+
 
     //-- Debug Code --
     {
