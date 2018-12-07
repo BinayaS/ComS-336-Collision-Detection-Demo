@@ -38,8 +38,10 @@
 
   var cube1 = new solid(10, 20, 5, 20, 0, 20, -1, 0xFA7268, scene);
   var cube2 = new solid(30, 10, 10, -20, 0, -20, -1, 0xFA7268, scene);
+  var cube3 = new solid(10, 10, 30, -20, 0,-30, -1, 0xFA7268, scene);
   objectList.push(cube1);
   objectList.push(cube2);
+  objectList.push(cube3);
   //objectList.push(planeNode);
 
 }

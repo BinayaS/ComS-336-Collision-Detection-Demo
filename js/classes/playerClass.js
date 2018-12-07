@@ -77,8 +77,7 @@ class player {
 
       }
 
-      //-- Apply Vertical Movement --
-
+      //-- Apply Movement --
       if(objectList.length > 0) {
         for(var i = 0; i < objectList.length; i++) {
           if(placeMeeting( this.box.min.x + this.hspdX, this.box.max.x + this.hspdX,
@@ -100,9 +99,6 @@ class player {
                             this.box.min.y + this.vspd, this.box.max.y + this.vspd, objectList[i])) {
                             this.collisionY = true;
                             this.collisionYObject = objectList[i];
-          }
-          if(this.collisionX || this.collisionY || this.collisionZ) {
-            break;
           }
         }
       } else {
@@ -147,8 +143,6 @@ class player {
                         this.collisionYObject = null;
         }
       }
-
-
 
 
     }
