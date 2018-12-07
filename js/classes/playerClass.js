@@ -28,8 +28,11 @@ class player {
       this.vspd = 0;
       this.spd = 1;
       this.collisionX = false;
+      this.collisionXSign = false;
       this.collisionZ = false;
+      this.collisionZSign = false;
       this.collisionY = false;
+      this.collisionYSign = false;
       this.collisionXObject = null;
       this.collisionZObject = null;
       this.collisionYObject = null;
@@ -83,6 +86,13 @@ class player {
           if(placeMeeting( this.box.min.x + this.hspdX, this.box.max.x + this.hspdX,
                             this.box.min.z, this.box.max.z,
                             this.box.min.y, this.box.max.y, objectList[i])) {
+
+            if(placeMeeting( this.box.min.x + sign(this.hspdX), this.box.max.x + sign(this.hspdX),
+                              this.box.min.z, this.box.max.z,
+                              this.box.min.y, this.box.max.y, objectList[i])) {
+                              this.collisionXSign = true;
+            }
+
                             this.collisionX = true;
                             this.collisionXObject = objectList[i];
           }
@@ -90,6 +100,12 @@ class player {
           if(placeMeeting( this.box.min.x, this.box.max.x,
                             this.box.min.z + this.hspdZ, this.box.max.z + this.hspdZ,
                             this.box.min.y, this.box.max.y, objectList[i])) {
+
+            if(placeMeeting( this.box.min.x, this.box.max.x,
+                              this.box.min.z + sign(this.hspdZ), this.box.max.z + sign(this.hspdZ),
+                              this.box.min.y, this.box.max.y, objectList[i])) {
+                              this.collisionYSign = true;
+            }
                             this.collisionZ = true;
                             this.collisionZObject = objectList[i];
           }
@@ -97,6 +113,12 @@ class player {
           if(placeMeeting( this.box.min.x, this.box.max.x,
                             this.box.min.z, this.box.max.z,
                             this.box.min.y + this.vspd, this.box.max.y + this.vspd, objectList[i])) {
+
+            if(placeMeeting( this.box.min.x, this.box.max.x,
+                              this.box.min.z + sign(this.hspdZ), this.box.max.z + sign(this.hspdZ),
+                              this.box.min.y, this.box.max.y, objectList[i])) {
+                              this.collisionYSign = true;
+            }
                             this.collisionY = true;
                             this.collisionYObject = objectList[i];
           }
@@ -122,6 +144,11 @@ class player {
                         this.box.min.z, this.box.max.z,
                         this.box.min.y, this.box.max.y, this.collisionXObject)) {
                         this.collisionX = false;
+                        //this.collisionXObject = null;
+        } else if(!placeMeeting(this.box.min.x + sign(this.hspdX), this.box.max.x + sign(this.hspdX),
+                        this.box.min.z, this.box.max.z,
+                        this.box.min.y, this.box.max.y, this.collisionXObject)) {
+                        this.collisionXSign = false;
                         this.collisionXObject = null;
         }
       }
@@ -131,6 +158,11 @@ class player {
                         this.box.min.z + this.hspdZ, this.box.max.z + this.hspdZ,
                         this.box.min.y, this.box.max.y, this.collisionZObject)) {
                         this.collisionZ = false;
+                        //this.collisionZObject = null;
+        } else if(!placeMeeting(this.box.min.x, this.box.max.x,
+                        this.box.min.z + sign(this.hspdZ), this.box.max.z + sign(this.hspdZ),
+                        this.box.min.y, this.box.max.y, this.collisionZObject)) {
+                        this.collisionZSign = false;
                         this.collisionZObject = null;
         }
       }
@@ -140,6 +172,11 @@ class player {
                         this.box.min.z, this.box.max.z,
                         this.box.min.y + this.vspd, this.box.max.y + this.vspd, this.collisionYObject)) {
                         this.collisionY = false;
+                        //this.collisionYObject = null;
+        } else if(!placeMeeting(this.box.min.x, this.box.max.x,
+                        this.box.min.z, this.box.max.z,
+                        this.box.min.y + sign(this.vspd), this.box.max.y + sign(this.vspd), this.collisionYObject)) {
+                        this.collisionYSign = false;
                         this.collisionYObject = null;
         }
       }
