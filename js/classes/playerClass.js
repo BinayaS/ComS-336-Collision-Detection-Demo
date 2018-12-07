@@ -104,7 +104,7 @@ class player {
             if(placeMeeting( this.box.min.x, this.box.max.x,
                               this.box.min.z + sign(this.hspdZ), this.box.max.z + sign(this.hspdZ),
                               this.box.min.y, this.box.max.y, objectList[i])) {
-                              this.collisionYSign = true;
+                              this.collisionZSign = true;
             }
                             this.collisionZ = true;
                             this.collisionZObject = objectList[i];
@@ -129,18 +129,18 @@ class player {
         this.body.translateY(this.vspd * 60 * delta);
       }
 
-      if(!this.collisionX) {
+      if(!this.collisionX && !this.collisionXSign) {
         this.body.translateX(this.hspdX * 60 * delta);
       }
-      if(!this.collisionY) {
+      if(!this.collisionY && !this.collisionYSign) {
         this.body.translateY(this.vspd * 60 * delta);
       }
-      if(!this.collisionZ) {
+      if(!this.collisionZ && !this.collisionZSign) {
         this.body.translateZ(this.hspdZ * 60 * delta);
       }
 
       if(this.collisionXObject != null) {
-        if(!placeMeeting(this.box.min.x + this.hspdX, this.box.max.x + this.hspdX,
+        if(placeMeeting(this.box.min.x + this.hspdX, this.box.max.x + this.hspdX,
                         this.box.min.z, this.box.max.z,
                         this.box.min.y, this.box.max.y, this.collisionXObject)) {
                         this.collisionX = false;
@@ -188,6 +188,7 @@ class player {
     {
       //console.log(this.body.position.z);
       //console.log(this.box.min);
+      console.log(this.collisionXSign);
     }
 
   }
