@@ -1,7 +1,7 @@
-function isCollision(tree, player,hspdX,hspdZ){
+function isCollision(tree, player,hspdX,hspdZ,vspd){
   var currentNode=tree.root;
 
-  return collisionDirection(currentNode,player,hspdX,hspdZ);
+  return collisionDirection(currentNode,player,hspdX,hspdZ,vspd);
 }
 
 function instersect(obj,playerCoords){
@@ -26,13 +26,15 @@ function instersect(obj,playerCoords){
            (aMinZ <= bMaxZ && aMaxZ >= bMinZ);
 }
 
-function collisionDirection(obj,player,hspdX,hspdZ){
+function collisionDirection(obj,player,hspdX,hspdZ,vspd){
   var playerCoords=player;
 
   playerCoords.max.x+=hspdX;
   playerCoords.min.x+=hspdX;
   playerCoords.max.z+=hspdZ;
   playerCoords.min.z+=hspdZ;
+  playerCoords.max.y+=vspd;
+  playerCoords.min.y+=vspd;
   if(instersect(obj,playerCoords)){
     return true;
   }

@@ -22,6 +22,8 @@ class player {
     //-- Setup Local Vars. --
     {
       this.hspd = 0;
+      this.hspdX = 0;
+      this.hspdZ = 0;
       this.vspd = 0;
       this.spd = 1;
       this.currentMoveSpd = this.spd;
@@ -61,22 +63,11 @@ class player {
         }
 
       }
-      if(this.moveForward && !this.moveBackward) {
-        this.body.translateZ(this.spd);
-      }
-      if(this.moveBackward && !this.moveForward) {
-        this.body.translateZ(-this.spd);
-      }
-      if(this.moveLeft && !this.moveRight) {
-        this.body.translateX(this.spd);
-      }
-      if(this.moveRight && !this.moveLeft) {
-        this.body.translateX(-this.spd);
-      }
+      
 
       //-- Apply Vertical Movement --
-      if(!isCollision(objectTree,this.box,this.hspdX,this.hspdZ)){
-        console.log(!isCollision(objectTree,this.box,this.hspdX,this.hspdZ))
+      if(!isCollision(objectTree,this.box,this.hspdX,this.hspdZ,this.vspd)){
+        console.log(!isCollision(objectTree,this.box,this.hspdX,this.hspdZ,this.vspd))
         this.body.translateX(this.hspdX);
         this.body.translateZ(this.hspdZ);
         this.body.translateY(this.vspd);
