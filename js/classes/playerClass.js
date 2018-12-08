@@ -18,6 +18,8 @@ class player {
       this.moveBackward = false;
       this.moveLeft = false;
       this.moveRight = false;
+      this.jump = false;
+      this.onGround = false;
     }
 
     //-- Setup Local Vars. --

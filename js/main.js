@@ -27,23 +27,22 @@
 
 //-- Temp. Objects --
 {
-  var geo = new THREE.PlaneBufferGeometry(200, 200);
-  var mat = new THREE.MeshBasicMaterial({ color: 0xD9C323, side: THREE.DoubleSide });
-  var plane = new THREE.Mesh(geo, mat);
-
-  plane.rotateX(90 * Math.PI / 180);
-  plane.position.setY(-5);
-
-  scene.add(plane);
-
-  var cube1 = new solid(10, 20, 5, 20, 0, 20, -1, 0xFA7268, scene);
-  var cube2 = new solid(30, 10, 10, -20, 0, -20, -1, 0xFA7268, scene);
-  var cube3 = new solid(10, 10, 30, -20, 0,-30, -1, 0xFA7268, scene);
-  objectList.push(cube1);
-  objectList.push(cube2);
-  objectList.push(cube3);
-  //objectList.push(planeNode);
-
+  var c1 = new solid(10, 30, 100, 50, 0, 10, -1, 0x00ADB5, scene);
+  var c2 = new solid(100, 30, 10, -16, 0, 10, -1, 0x00ADB5, scene);
+  var c3 = new solid(125, 30, 10, -16, 0, 55, -1, 0x00ADB5, scene);
+  var c4 = new solid(10, 30, 100, -82, 0, 10, -1, 0x00ADB5, scene);
+  var c5 = new solid(10, 50, 10, 0, 0, -50, -1, 0xFFF4E0, scene);
+  var c6 = new solid(10, 50, 10, -30, 0, -50, -1, 0xFFF4E0, scene);
+  var c7 = new solid(30, 10, 10, -10, 15, -50, -1, 0xFFF4E0, scene);
+  var plane = new solid(200, 1, 200, 0, -10, 0, -1, 0xD9C323, scene)
+  objectList.push(c1);
+  objectList.push(c2);
+  objectList.push(c3);
+  objectList.push(c4);
+  objectList.push(c5);
+  objectList.push(c6);
+  objectList.push(c7);
+  objectList.push(plane);
 }
 
 //-- Vars --
