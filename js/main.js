@@ -27,7 +27,7 @@
 
 //-- Temp. Objects --
 {
-  var geo = new THREE.PlaneBufferGeometry(100, 100);
+  var geo = new THREE.PlaneBufferGeometry(200, 200);
   var mat = new THREE.MeshBasicMaterial({ color: 0xD9C323, side: THREE.DoubleSide });
   var plane = new THREE.Mesh(geo, mat);
 

@@ -16,7 +16,9 @@ class solid {
     this.body.position.setZ(z);
     this.box = new THREE.Box3().setFromObject(this.body);
 
-    scene.add(this.body);
+    if(scene != null) {
+      scene.add(this.body);
+    }
   }
   update() {
     this.box.setFromObject(this.body);

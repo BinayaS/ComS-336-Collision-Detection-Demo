@@ -78,9 +78,6 @@ class player {
         }
 
       }
-
-      //-- Apply Movement --
-      {
         //-- Do we have objects to collide with? --
         {
           if(objectList.length > 0) {
@@ -145,7 +142,6 @@ class player {
               this.body.translateY(this.vspd * 60 * delta);
             }
           }
-        }
 
         //-- Can we move? --
         {
