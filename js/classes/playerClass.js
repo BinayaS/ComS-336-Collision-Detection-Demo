@@ -31,8 +31,8 @@ class player {
       this.hspdZ = 0;
       this.vspd = 0;
       this.spd = 1;
-      this.gravity=-1;
-      this.jumpSpd=10;
+      this.gravity=-.5;
+      this.jumpSpd=5.5;
       this.collisionX = false;
       this.collisionXSign = false;
       this.collisionZ = false;
@@ -90,7 +90,7 @@ class player {
         }
 
         this.vspd+=this.gravity;
-        console.log(this.vspd);
+        // console.log(this.vspd);
 
       }
         //-- Do we have objects to collide with? --
@@ -154,26 +154,25 @@ class player {
               }
             }
             } else {
-              this.body.translateX(this.hspdX * 60 * delta);
-              this.body.translateZ(this.hspdZ * 60 * delta);
-              console.log(this.vspd);
-              this.body.translateY(this.vspd * 60 * delta);
+              this.body.translateX(this.hspdX );
+              this.body.translateZ(this.hspdZ );
+              this.body.translateY(this.vspd );
             }
           }
 
         //-- Can we move? --
         {
           if(!this.collisionX && !this.collisionXSign) {
-            this.body.translateX(this.hspdX * 60 * delta);
+            this.body.translateX(this.hspdX);
           }
           if(!this.collisionY && !this.collisionYSign) {
-            this.body.translateY(this.vspd * 60 * delta);
+            this.body.translateY(this.vspd );
           }
           // if(this.collisionY) {
           //   this.on;
           // }
           if(!this.collisionZ && !this.collisionZSign) {
-            this.body.translateZ(this.hspdZ * 60 * delta);
+            this.body.translateZ(this.hspdZ );
           }
         }
 
@@ -216,6 +215,7 @@ class player {
           if(this.collisionYObject != null) {
             if(this.vspd==0){
               this.collisionY=false;
+              this.collisionYSign = false;
               this.collisionYObject = null;
             }
             else if(placeMeeting( this.box.min.x, this.box.max.x,
