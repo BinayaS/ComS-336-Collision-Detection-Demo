@@ -7,9 +7,11 @@ class player {
       this.cube = new THREE.Mesh(this.boxGeometry, this.basicMaterial);
       this.body = new THREE.Object3D();
       this.body.add(this.cube);
+      this.body.translateY(20);
+      this.body.translateZ(-5);
       scene.add(this.body);
-      //this.body.translateZ(10);
-      //this.body.translateY(20);
+
+
     }
 
     //-- Setup Keyboard Vars. --
@@ -29,6 +31,8 @@ class player {
       this.hspdZ = 0;
       this.vspd = 0;
       this.spd = 1;
+      this.gravity=-1;
+      this.jumpSpd=10;
       this.collisionX = false;
       this.collisionXSign = false;
       this.collisionZ = false;
@@ -79,6 +83,15 @@ class player {
         	this.hspdZ = -this.currentMoveSpd;
         }
 
+        if(this.onGround&&this.jump){
+          this.vspd+=this.jumpSpd;
+          this.onGround=false;
+          this.jump=false;
+        }
+
+        this.vspd+=this.gravity;
+        console.log(this.vspd);
+
       }
         //-- Do we have objects to collide with? --
         {
@@ -128,11 +141,13 @@ class player {
                                     this.box.min.y + this.vspd, this.box.max.y + this.vspd, objectList[i])) {
 
                     if(placeMeeting( this.box.min.x, this.box.max.x,
-                                      this.box.min.z + sign(this.hspdZ), this.box.max.z + sign(this.hspdZ),
-                                      this.box.min.y, this.box.max.y, objectList[i])) {
+                                      this.box.min.z, this.box.max.z,
+                                      this.box.min.y+sign(this.vspd), this.box.max.y+sign(this.vspd), objectList[i])) {
                                       this.collisionYSign = true;
                     }
                                     this.collisionY = true;
+                                    this.vspd=0;
+                                    this.onGround=true;
                                     this.collisionYObject = objectList[i];
                   }
                 }
@@ -141,6 +156,7 @@ class player {
             } else {
               this.body.translateX(this.hspdX * 60 * delta);
               this.body.translateZ(this.hspdZ * 60 * delta);
+              console.log(this.vspd);
               this.body.translateY(this.vspd * 60 * delta);
             }
           }
@@ -153,6 +169,9 @@ class player {
           if(!this.collisionY && !this.collisionYSign) {
             this.body.translateY(this.vspd * 60 * delta);
           }
+          // if(this.collisionY) {
+          //   this.on;
+          // }
           if(!this.collisionZ && !this.collisionZSign) {
             this.body.translateZ(this.hspdZ * 60 * delta);
           }
@@ -195,7 +214,11 @@ class player {
         //-- Check if there still is a collision in the x axis --
         {
           if(this.collisionYObject != null) {
-            if(placeMeeting( this.box.min.x, this.box.max.x,
+            if(this.vspd==0){
+              this.collisionY=false;
+              this.collisionYObject = null;
+            }
+            else if(placeMeeting( this.box.min.x, this.box.max.x,
                             this.box.min.z, this.box.max.z,
                             this.box.min.y + this.vspd, this.box.max.y + this.vspd, this.collisionYObject)) {
                             this.collisionY = false;
