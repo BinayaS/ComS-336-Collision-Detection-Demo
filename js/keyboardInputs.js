@@ -17,6 +17,9 @@ document.addEventListener('keydown', function(event) {
         //alert('s was pressed');
         objPlayer.moveBackward = true;
     }
+    if(event.keyCode == 32) {
+        objPlayer.jump = true;
+    }
   }
 
   //-- Camera Input --
