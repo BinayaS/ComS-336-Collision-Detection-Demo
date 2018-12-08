@@ -6,7 +6,7 @@ class solid {
     this.geometry = new THREE.BoxGeometry(width, height, depth);
 
     if(material == -1) {
-      this.material = new THREE.MeshBasicMaterial({ color:_color });
+      this.material = new THREE.MeshPhongMaterial({ color:_color });
     } else {
       //TODO
     }
