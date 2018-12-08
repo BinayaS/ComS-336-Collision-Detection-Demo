@@ -2,7 +2,10 @@ class player {
   constructor(scene) {
     //-- Setup the body --
     {
-      this.boxGeometry = new THREE.BoxGeometry(10, 10, 10);
+      this.height = 10;
+      this.width = 10;
+      this.depth = 10;
+      this.boxGeometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
       this.basicMaterial = new THREE.MeshBasicMaterial({color: 0x1195DD});
       this.cube = new THREE.Mesh(this.boxGeometry, this.basicMaterial);
       this.body = new THREE.Object3D();

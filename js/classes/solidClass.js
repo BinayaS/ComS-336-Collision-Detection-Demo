@@ -1,5 +1,8 @@
 class solid {
   constructor(width, height, depth, x, y, z, material, _color, scene) {
+    this.height = height;
+    this.width = width;
+    this.depth = depth;
     this.geometry = new THREE.BoxGeometry(width, height, depth);
 
     if(material == -1) {

@@ -49,6 +49,7 @@
 {
   var objPlayer = new player(scene);
   objCamera = new camera(scene, objPlayer);
+  satCollision(objPlayer, c2, 0, 0, 0, scene);
 }
 
 //-- Call Functions
