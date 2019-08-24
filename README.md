@@ -1,3 +1,3 @@
 # ComS-336-Final-Project
 
-A simple 3D endless runner game made using Three.js
+A project to demonstrate basic AABB collision detection in 3D using three.js
